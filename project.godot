@@ -26,7 +26,7 @@ config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/http_server/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [physics]
 
