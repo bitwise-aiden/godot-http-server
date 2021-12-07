@@ -12,28 +12,28 @@ func _process(delta: float) -> void:
 	if __server == null:
 		__start_server()
 
-	self.__process_connections()
+	__process_connections()
 
 
 # Private methods
 
 func __start_server(port: int = 3000) -> void:
 	print("Starting server")
-	self.__server = HTTPServer.new()
+	__server = HTTPServer.new()
 
-	self.__server.endpoint(HTTPServer.Request.GET, "/test", funcref(self, "__test"))
-	self.__server.endpoint(HTTPServer.Request.POST, "/test", funcref(self, "__test_post"))
-	self.__server.endpoint(HTTPServer.Request.GET, "/webhook", funcref(self, "__webhook"))
-	self.__server.fallback(funcref(self, "__fallback"))
+	__server.endpoint(HTTPServer.Request.GET, "/test", funcref(self, "__test"))
+	__server.endpoint(HTTPServer.Request.POST, "/test", funcref(self, "__test_post"))
+	__server.endpoint(HTTPServer.Request.POST, "/webhook", funcref(self, "__webhook"))
+#	__server.fallback(funcref(self, "__fallback"))
 
-	self.__server.listen(port)
+	__server.listen(port)
 
 
 func __process_connections() -> void:
-	if self.__server == null:
+	if __server == null:
 		return # Possibly start the server again here
 
-	self.__server.take_connection()
+	__server.take_connection()
 
 
 func __test(request: HTTPServer.Request, response: HTTPServer.Response) -> void:
