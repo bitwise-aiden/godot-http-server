@@ -18,25 +18,24 @@ var __fallback: FuncRef = null
 var __server: TCP_Server = null
 
 
-
 # Public methods
 
 func endpoint(type: int, endpoint: String, function: FuncRef) -> void:
 	var endpoint_hash: Array = [type, endpoint]
-	if endpoint_hash in self.__endpoints:
+	if endpoint_hash in __endpoints:
 		print(
 			"[ERR] Endpoint already defined type: %s, endpoint: %s" % [
-				self.__type_string(type),
+				__type_string(type),
 				endpoint,
 			]
 		)
 		return
 
-	self.__endpoints[endpoint_hash] = function
+	__endpoints[endpoint_hash] = function
 
 
 func fallback(function: FuncRef) -> void:
-	self.__fallback = function
+	__fallback = function
 
 
 func take_connection() -> StreamPeerTCP:
@@ -49,7 +48,7 @@ func take_connection() -> StreamPeerTCP:
 	var connection: StreamPeerTCP = .take_connection()
 
 	if connection:
-		self.__process_connection(connection)
+		__process_connection(connection)
 
 	return connection
 
@@ -61,6 +60,7 @@ func __type_string(type: int) -> String:
 		return "UNKNOWN (%d)" % type
 
 	return ["GET", "DELETE", "PUT", "POST"][type]
+
 
 func __type_from_string(type: String) -> int:
 	return ["GET", "DELETE", "PUT", "POST"].find(type)
@@ -115,12 +115,12 @@ func __process_connection(connection: StreamPeerTCP) -> void:
 		var body_parts: Array = content_parts.slice(header_index + 1, content_parts.size())
 		body = PoolStringArray(body_parts).join("\r\n")
 
-	var result: String = self.__process_request(method, endpoint, headers, body)
+	var result: String = __process_request(method, endpoint, headers, body)
 	connection.put_data(result.to_utf8())
 
 
 func __process_request(method: String, endpoint: String, headers: Dictionary, body: String) -> String:
-	var type: int = self.__type_from_string(method)
+	var type: int = __type_from_string(method)
 
 	var request: Request = Request.new(
 		type,
@@ -131,16 +131,16 @@ func __process_request(method: String, endpoint: String, headers: Dictionary, bo
 
 	var endpoint_func: FuncRef = null
 	var endpoint_hash: Array = [type, endpoint]
-	if !self.__endpoints.has(endpoint_hash):
+	if !__endpoints.has(endpoint_hash):
 		print(
 			"[WRN] Recieved request for unknown endpoint, method: %s, endpoint: %s" % [method, endpoint]
 		)
-		if self.__fallback:
-			endpoint_func = self.__fallback
+		if __fallback:
+			endpoint_func = __fallback
 		else:
 			return Status.code_to_response(Status.NOT_FOUND)
 	else:
-		endpoint_func = self.__endpoints[endpoint_hash]
+		endpoint_func = __endpoints[endpoint_hash]
 
 	if !endpoint_func.is_valid():
 		print(
@@ -154,7 +154,7 @@ func __process_request(method: String, endpoint: String, headers: Dictionary, bo
 	var response: Response = Response.new()
 	endpoint_func.call_func(request, response)
 
-	return self.__process_response(response)
+	return __process_response(response)
 
 
 func __process_response(response: Response) -> String:
