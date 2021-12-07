@@ -163,6 +163,9 @@ func __process_response(response: Response) -> String:
 	content.append(Status.code_to_status_line(response.__status))
 
 	var data = response.__data
+	if !data:
+		data = Status.code_to_description(response.__status)
+
 	if response.__headers.get("content-type", "") == "application/json":
 		data = JSON.print(data)
 
