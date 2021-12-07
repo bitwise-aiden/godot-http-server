@@ -1,9 +1,3 @@
-# Constant variables
-
-const StatusCode: Resource = preload("res://addons/http_server/status_code.gd")
-const Status: Resource = preload("res://addons/http_server/status.gd")
-
-
 # Private variables
 
 var __data = "" # variant
@@ -11,7 +5,7 @@ var __headers: Dictionary = {
 	# key: String, header name
 	# value: Variant, header value
 }
-var __status: StatusCode = Status.new().OK
+var __status: int = 200
 
 
 # Public methods
@@ -30,4 +24,4 @@ func json(data) -> void: # data: Variant
 
 
 func status(status: int) -> void:
-	__status = Status.new().code_to_status(status)
+	__status = status
