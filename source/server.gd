@@ -9,8 +9,8 @@ var __server: HTTPServer = null
 # Lifecycle methods
 
 func _process(delta: float) -> void:
-	if self.__server == null || self.__server.__server == null:
-		self.__start_server()
+	if __server == null:
+		__start_server()
 
 	self.__process_connections()
 
