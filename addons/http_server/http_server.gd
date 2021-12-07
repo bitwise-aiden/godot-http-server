@@ -1,6 +1,12 @@
 class_name HTTPServer extends TCP_Server
 
 
+# Public constants
+
+const Request = preload("res://addons/http_server/request.gd")
+const Response = preload("res://addons/http_server/response.gd")
+const Status = preload("res://addons/http_server/status.gd")
+
 
 # Private variables
 
@@ -50,13 +56,6 @@ func take_connection() -> StreamPeerTCP:
 
 # Private methods
 
-func __status_string(status: int) -> String:
-	if !self.STATUS_STRINGS.has(status):
-		return "UNKNOWN"
-
-	return self.STATUS_STRINGS[status]
-
-
 func __type_string(type: int) -> String:
 	if type < 0 || type > 3:
 		return "UNKNOWN (%d)" % type
@@ -85,7 +84,7 @@ func __process_connection(connection: StreamPeerTCP) -> void:
 	var content_parts: Array = content_string.split("\r\n")
 
 	if content_parts.empty():
-		connection.put_data(self.BAD_REQUEST.to_utf8())
+		connection.put_data(Status.code_to_response(Status.BAD_REQUEST).to_utf8())
 		return
 
 	var request_line = content_parts[0]
@@ -101,7 +100,7 @@ func __process_connection(connection: StreamPeerTCP) -> void:
 		print(
 			"[ERR] Error parsing request data: %s" % [String(content)]
 		)
-		connection.put_data(self.BAD_REQUEST.to_utf8())
+		connection.put_data(Status.code_to_response(Status.BAD_REQUEST).to_utf8())
 		return
 
 	for i in range(1, header_index):
@@ -139,7 +138,7 @@ func __process_request(method: String, endpoint: String, headers: Dictionary, bo
 		if self.__fallback:
 			endpoint_func = self.__fallback
 		else:
-			return self.BAD_REQUEST
+			return Status.code_to_response(Status.NOT_FOUND)
 	else:
 		endpoint_func = self.__endpoints[endpoint_hash]
 
@@ -161,7 +160,7 @@ func __process_request(method: String, endpoint: String, headers: Dictionary, bo
 func __process_response(response: Response) -> String:
 	var content = PoolStringArray()
 
-	content.append("HTTP/1.1 %d %s" % [response.__status, self.__status_string(response.__status)])
+	content.append(Status.code_to_status_line(response.__status))
 
 	var data = response.__data
 	if response.__headers.get("content-type", "") == "application/json":
