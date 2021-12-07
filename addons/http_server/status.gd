@@ -1,159 +1,212 @@
-const StatusCode = preload("res://addons/http_server/status_code.gd")
+# Public constants
+
+const CONTINUE: int = 100
+const SWITCHING_PROTOCOLS: int = 101
+const PROCESSING: int = 102
+const EARLY_HINTS: int = 103
+const OK: int = 200
+const CREATED: int = 201
+const ACCEPTED: int = 202
+const NON_AUTHORITATIVE_INFORMATION: int = 203
+const NO_CONTENT: int = 204
+const RESET_CONTENT: int = 205
+const PARTIAL_CONTENT: int = 206
+const MULTI_STATUS: int = 207
+const ALREADY_REPORTED: int = 208
+const IM_USED: int = 226
+const MULTIPLE_CHOICE: int = 300
+const MOVED_PERMANENTLY: int = 301
+const FOUND: int = 302
+const SEE_OTHER: int = 303
+const NOT_MODIFIED: int = 304
+const TEMPORARY_REDIRECT: int = 307
+const PERMANENT_REDIRECT: int = 308
+const BAD_REQUEST: int = 400
+const UNAUTHORIZED: int = 401
+const PAYMENT_REQUIRED: int = 402
+const FORBIDDEN: int = 403
+const NOT_FOUND: int = 404
+const METHOD_NOT_ALLOWED: int = 405
+const NOT_ACCEPTABLE: int = 406
+const PROXY_AUTHENTICATION_REQUIRED: int = 407
+const REQUEST_TIMEOUT: int = 408
+const CONFLICT: int = 409
+const GONE: int = 410
+const LENGTH_REQUIRED: int = 411
+const PRECONDITION_FAILED: int = 412
+const PAYLOAD_TOO_LARGE: int = 413
+const URI_TOO_LONG: int = 414
+const UNSUPPORTED_MEDIA_TYPE: int = 415
+const RANGE_NOT_SATISFIABLE: int = 416
+const EXPECTATION_FAILED: int = 417
+const IM_A_TEAPOT: int = 418
+const MISDIRECTED_REQUEST: int = 421
+const UNPROCESSABLE_ENTITY: int = 422
+const LOCKED: int = 423
+const FAILED_DEPENDENCY: int = 424
+const TOO_EARLY: int = 425
+const UPGRADE_REQUIRED: int = 426
+const PRECONDITION_REQUIRED: int = 428
+const TOO_MANY_REQUESTS: int = 429
+const REQUEST_HEADER_FIELDS_TOO_LARGE: int = 431
+const UNAVAILABLE_FOR_LEGAL_REASONS: int = 451
+const INTERNAL_SERVER_ERROR: int = 500
+const NOT_IMPLEMENTED: int = 501
+const BAD_GATEWAY: int = 502
+const SERVICE_UNAVAILABLE: int = 503
+const GATEWAY_TIMEOUT: int = 504
+const HTTP_VERSION_NOT_SUPPORTED: int = 505
+const VARIANT_ALSO_NEGOTIATES: int = 506
+const INSUFFICIENT_STORAGE: int = 507
+const LOOP_DETECTED: int = 508
+const NOT_EXTENDED: int = 510
+const NETWORK_AUTHENTICATION_REQUIRED: int = 511
 
 
-# Constant variables
+# Private constants
 
-var CONTINUE: StatusCode = StatusCode.new(100, "CONTINUE", "Continue")
-var SWITCHING_PROTOCOLS: StatusCode = StatusCode.new(101, "SWITCHING_PROTOCOLS", "Switching Protocols")
-var PROCESSING: StatusCode = StatusCode.new(100, "PROCESSING", "Processing")
-var EARLY_HINTS: StatusCode = StatusCode.new(103, "EARLY_HINTS", "Early Hints")
-
-var OK: StatusCode = StatusCode.new(200, "OK", "Ok")
-var CREATED: StatusCode = StatusCode.new(201, "CREATED", "Created")
-var ACCEPTED: StatusCode = StatusCode.new(202, "ACCEPTED", "Accepted")
-var NON_AUTHORITATIVE_INFORMATION: StatusCode = StatusCode.new(203, "NON_AUTHORITATIVE_INFORMATION", "Non-Authoritative Information")
-var NO_CONTENT: StatusCode = StatusCode.new(204, "NO_CONTENT", "No Content")
-var RESET_CONTENT: StatusCode = StatusCode.new(205, "RESET_CONTENT", "Reset Content")
-var PARTIAL_CONTENT: StatusCode = StatusCode.new(206, "PARTIAL_CONTENT", "Partial Content")
-var MULTI_STATUS: StatusCode = StatusCode.new(207, "MULTI_STATUS", "Multi-Status")
-var ALREADY_REPORTED: StatusCode = StatusCode.new(208, "ALREADY_REPORTED", "Already Reported")
-var IM_USED: StatusCode = StatusCode.new(226, "IM_USED", "IM Used")
-
-var MULTIPLE_CHOICE: StatusCode = StatusCode.new(300, "MULTIPLE_CHOICE", "Multiple Choice")
-var MOVED_PERMANENTLY: StatusCode = StatusCode.new(301, "MOVED_PERMANENTLY", "Moved Permanently")
-var FOUND: StatusCode = StatusCode.new(302, "FOUND", "Found")
-var SEE_OTHER: StatusCode = StatusCode.new(303, "SEE_OTHER", "See Other")
-var NOT_MODIFIED: StatusCode = StatusCode.new(304, "NOT_MODIFIED", "Not Modified")
-var TEMPORARY_REDIRECT: StatusCode = StatusCode.new(307, "TEMPORARY_REDIRECT", "Temporary Redirect")
-var PERMANENT_REDIRECT: StatusCode = StatusCode.new(308, "PERMANENT_REDIRECT", "Permanent Redirect")
-
-var BAD_REQUEST: StatusCode = StatusCode.new(400, "BAD_REQUEST", "Bad Request")
-var UNAUTHORIZED: StatusCode = StatusCode.new(401, "UNAUTHORIZED", "Unauthorized")
-var PAYMENT_REQUIRED: StatusCode = StatusCode.new(402, "PAYMENT_REQUIRED", "Payment Required")
-var FORBIDDEN: StatusCode = StatusCode.new(403, "FORBIDDEN", "Forbidden")
-var NOT_FOUND: StatusCode = StatusCode.new(404, "NOT_FOUND", "Not Found")
-var METHOD_NOT_ALLOWED: StatusCode = StatusCode.new(405, "METHOD_NOT_ALLOWED", "Method Not Allowed")
-var NOT_ACCEPTABLE: StatusCode = StatusCode.new(406, "NOT_ACCEPTABLE", "Not Acceptable")
-var PROXY_AUTHENTICATION_REQUIRED: StatusCode = StatusCode.new(407, "PROXY_AUTHENTICATION_REQUIRED", "Proxy Authentication Requested")
-var REQUEST_TIMEOUT: StatusCode = StatusCode.new(408, "REQUEST_TIMEOUT", "Request Timeout")
-var CONFLICT: StatusCode = StatusCode.new(409, "CONFLICT", "Conflict")
-var GONE: StatusCode = StatusCode.new(410, "GONE", "Gone")
-var LENGTH_REQUIRED: StatusCode = StatusCode.new(411, "LENGTH_REQUIRED", "Length Required")
-var PRECONDITION_FAILED: StatusCode = StatusCode.new(412, "PRECONDITION_FAILED", "Precondition Failed")
-var PAYLOAD_TOO_LARGE: StatusCode = StatusCode.new(413, "PAYLOAD_TOO_LARGE", "Payload Too Large")
-var URI_TOO_LONG: StatusCode = StatusCode.new(414, "URI_TOO_LONG", "URI Too long")
-var UNSUPPORTED_MEDIA_TYPE: StatusCode = StatusCode.new(415, "UNSUPPORTED_MEDIA_TYPE", "Unsupported Media Type")
-var RANGE_NOT_SATISFIABLE: StatusCode = StatusCode.new(416, "RANGE_NOT_SATISFIABLE", "Range Not Satisfiable")
-var EXPECTATION_FAILED: StatusCode = StatusCode.new(417, "EXPECTATION_FAILED", "Expectation Failed")
-var IM_A_TEAPOT: StatusCode = StatusCode.new(418, "IM_A_TEAPOT", "I'm A Teapot")
-var MISDIRECTED_REQUEST: StatusCode = StatusCode.new(421, "MISDIRECTED_REQUEST", "Misdirected Request")
-var UNPROCESSABLE_ENTITY: StatusCode = StatusCode.new(422, "UNPROCESSABLE_ENTITY", "Unprocessable Entity")
-var LOCKED: StatusCode = StatusCode.new(423, "LOCKED", "Locked")
-var FAILED_DEPENDENCY: StatusCode = StatusCode.new(424, "FAILED_DEPENDENCY", "Failed Dependency")
-var TOO_EARLY: StatusCode = StatusCode.new(425, "TOO_EARLY", "Too Early")
-var UPGRADE_REQUIRED: StatusCode = StatusCode.new(426, "UPGRADE_REQUIRED", "Upgrade Required")
-var PRECONDITION_REQUIRED: StatusCode = StatusCode.new(428, "PRECONDITION_REQUIRED", "Precondition Required")
-var TOO_MANY_REQUESTS: StatusCode = StatusCode.new(429, "TOO_MANY_REQUESTS", "Too Many Requests")
-var REQUEST_HEADER_FIELDS_TOO_LARGE: StatusCode = StatusCode.new(431, "REQUEST_HEADER_FIELDS_TOO_LARGE", "Request Header Fields Too Large")
-var UNAVAILABLE_FOR_LEGAL_REASONS: StatusCode = StatusCode.new(451, "UNAVAILABLE_FOR_LEGAL_REASONS", "Unavailable For Legal Reasons")
-
-var INTERNAL_SERVER_ERROR: StatusCode = StatusCode.new(500, "INTERNAL_SERVER_ERROR", "Internal Server Error")
-var NOT_IMPLEMENTED: StatusCode = StatusCode.new(501, "NOT_IMPLEMENTED", "Not Implemented")
-var BAD_GATEWAY: StatusCode = StatusCode.new(502, "BAD_GATEWAY", "Bad Gateway")
-var SERVICE_UNAVAILABLE: StatusCode = StatusCode.new(503, "SERVICE_UNAVAILABLE", "Service Unavailable")
-var GATEWAY_TIMEOUT: StatusCode = StatusCode.new(504, "GATEWAY_TIMEOUT", "Gateway Timeout")
-var HTTP_VERSION_NOT_SUPPORTED: StatusCode = StatusCode.new(505, "HTTP_VERSION_NOT_SUPPORTED", "HTTP Version Not Supported")
-var VARIANT_ALSO_NEGOTIATES: StatusCode = StatusCode.new(506, "VARIANT_ALSO_NEGOTIATES", "Variant Also Negotiates")
-var INSUFFICIENT_STORAGE: StatusCode = StatusCode.new(507, "INSUFFICIENT_STORAGE", "Insufficient Storage")
-var LOOP_DETECTED: StatusCode = StatusCode.new(508, "LOOP_DETECTED", "Loop detected")
-var NOT_EXTENDED: StatusCode = StatusCode.new(510, "NOT_EXTENDED", "Not Extended")
-var NETWORK_AUTHENTICATION_REQUIRED: StatusCode = StatusCode.new(511, "NETWORK_AUTHENTICATION_REQUIRED", "Network Authentication Required")
-
-var ALL_STATUSES: Array = [
-	CONTINUE,
-	SWITCHING_PROTOCOLS,
-	PROCESSING,
-	EARLY_HINTS,
-
-	OK,
-	CREATED,
-	ACCEPTED,
-	NON_AUTHORITATIVE_INFORMATION,
-	NO_CONTENT,
-	RESET_CONTENT,
-	PARTIAL_CONTENT,
-	MULTI_STATUS,
-	ALREADY_REPORTED,
-	IM_USED,
-
-	MULTIPLE_CHOICE,
-	MOVED_PERMANENTLY,
-	FOUND,
-	SEE_OTHER,
-	NOT_MODIFIED,
-	TEMPORARY_REDIRECT,
-	PERMANENT_REDIRECT,
-
-	BAD_REQUEST,
-	UNAUTHORIZED,
-	PAYMENT_REQUIRED,
-	FORBIDDEN,
-	NOT_FOUND,
-	METHOD_NOT_ALLOWED,
-	NOT_ACCEPTABLE,
-	PROXY_AUTHENTICATION_REQUIRED,
-	REQUEST_TIMEOUT,
-	CONFLICT,
-	GONE,
-	LENGTH_REQUIRED,
-	PRECONDITION_FAILED,
-	PAYLOAD_TOO_LARGE,
-	URI_TOO_LONG,
-	UNSUPPORTED_MEDIA_TYPE,
-	RANGE_NOT_SATISFIABLE,
-	EXPECTATION_FAILED,
-	IM_A_TEAPOT,
-	MISDIRECTED_REQUEST,
-	UNPROCESSABLE_ENTITY,
-	LOCKED,
-	FAILED_DEPENDENCY,
-	TOO_EARLY,
-	UPGRADE_REQUIRED,
-	PRECONDITION_REQUIRED,
-	TOO_MANY_REQUESTS,
-	REQUEST_HEADER_FIELDS_TOO_LARGE,
-	UNAVAILABLE_FOR_LEGAL_REASONS,
-
-	INTERNAL_SERVER_ERROR,
-	NOT_IMPLEMENTED,
-	BAD_GATEWAY,
-	SERVICE_UNAVAILABLE,
-	GATEWAY_TIMEOUT,
-	HTTP_VERSION_NOT_SUPPORTED,
-	VARIANT_ALSO_NEGOTIATES,
-	INSUFFICIENT_STORAGE,
-	LOOP_DETECTED,
-	NOT_EXTENDED,
-	NETWORK_AUTHENTICATION_REQUIRED,
-]
-
-
-# Private variables
-
-var __statuses_by_code: Dictionary = {
-	# key: int, status code
-	# value: StatusCode, instance
+const __DESCRIPTIONS: Dictionary = {
+	100: "Continue",
+	101: "Switching Protocols",
+	102: "Processing",
+	103: "Early Hints",
+	200: "Ok",
+	201: "Created",
+	202: "Accepted",
+	203: "Non-Authoritative Information",
+	204: "No Content",
+	205: "Reset Content",
+	206: "Partial Content",
+	207: "Multi-Status",
+	208: "Already Reported",
+	226: "IM Used",
+	300: "Multiple Choice",
+	301: "Moved Permanently",
+	302: "Found",
+	303: "See Other",
+	304: "Not Modified",
+	307: "Temporary Redirect",
+	308: "Permanent Redirect",
+	400: "Bad Request",
+	401: "Unauthorized",
+	402: "Payment Required",
+	403: "Forbidden",
+	404: "Not Found",
+	405: "Method Not Allowed",
+	406: "Not Acceptable",
+	407: "Proxy Authentication Requested",
+	408: "Request Timeout",
+	409: "Conflict",
+	410: "Gone",
+	411: "Length Required",
+	412: "Precondition Failed",
+	413: "Payload Too Large",
+	414: "URI Too long",
+	415: "Unsupported Media Type",
+	416: "Range Not Satisfiable",
+	417: "Expectation Failed",
+	418: "I'm A Teapot",
+	421: "Misdirected Request",
+	422: "Unprocessable Entity",
+	423: "Locked",
+	424: "Failed Dependency",
+	425: "Too Early",
+	426: "Upgrade Required",
+	428: "Precondition Required",
+	429: "Too Many Requests",
+	431: "Request Header Fields Too Large",
+	451: "Unavailable For Legal Reasons",
+	500: "Internal Server Error",
+	501: "Not Implemented",
+	502: "Bad Gateway",
+	503: "Service Unavailable",
+	504: "Gateway Timeout",
+	505: "HTTP Version Not Supported",
+	506: "Variant Also Negotiates",
+	507: "Insufficient Storage",
+	508: "Loop detected",
+	510: "Not Extended",
+	511: "Network Authentication Required",
 }
 
-
-# Lifecycle methods
-
-func _init() -> void:
-	for status in ALL_STATUSES:
-		__statuses_by_code[status.code] = status
+const __IDENTIFIERS: Dictionary = {
+	100: "CONTINUE",
+	101: "SWITCHING_PROTOCOLS",
+	102: "PROCESSING",
+	103: "EARLY_HINTS",
+	200: "OK",
+	201: "CREATED",
+	202: "ACCEPTED",
+	203: "NON_AUTHORITATIVE_INFORMATION",
+	204: "NO_CONTENT",
+	205: "RESET_CONTENT",
+	206: "PARTIAL_CONTENT",
+	207: "MULTI_STATUS",
+	208: "ALREADY_REPORTED",
+	226: "IM_USED",
+	300: "MULTIPLE_CHOICE",
+	301: "MOVED_PERMANENTLY",
+	302: "FOUND",
+	303: "SEE_OTHER",
+	304: "NOT_MODIFIED",
+	307: "TEMPORARY_REDIRECT",
+	308: "PERMANENT_REDIRECT",
+	400: "BAD_REQUEST",
+	401: "UNAUTHORIZED",
+	402: "PAYMENT_REQUIRED",
+	403: "FORBIDDEN",
+	404: "NOT_FOUND",
+	405: "METHOD_NOT_ALLOWED",
+	406: "NOT_ACCEPTABLE",
+	407: "PROXY_AUTHENTICATION_REQUIRED",
+	408: "REQUEST_TIMEOUT",
+	409: "CONFLICT",
+	410: "GONE",
+	411: "LENGTH_REQUIRED",
+	412: "PRECONDITION_FAILED",
+	413: "PAYLOAD_TOO_LARGE",
+	414: "URI_TOO_LONG",
+	415: "UNSUPPORTED_MEDIA_TYPE",
+	416: "RANGE_NOT_SATISFIABLE",
+	417: "EXPECTATION_FAILED",
+	418: "IM_A_TEAPOT",
+	421: "MISDIRECTED_REQUEST",
+	422: "UNPROCESSABLE_ENTITY",
+	423: "LOCKED",
+	424: "FAILED_DEPENDENCY",
+	425: "TOO_EARLY",
+	426: "UPGRADE_REQUIRED",
+	428: "PRECONDITION_REQUIRED",
+	429: "TOO_MANY_REQUESTS",
+	431: "REQUEST_HEADER_FIELDS_TOO_LARGE",
+	451: "UNAVAILABLE_FOR_LEGAL_REASONS",
+	500: "INTERNAL_SERVER_ERROR",
+	501: "NOT_IMPLEMENTED",
+	502: "BAD_GATEWAY",
+	503: "SERVICE_UNAVAILABLE",
+	504: "GATEWAY_TIMEOUT",
+	505: "HTTP_VERSION_NOT_SUPPORTED",
+	506: "VARIANT_ALSO_NEGOTIATES",
+	507: "INSUFFICIENT_STORAGE",
+	508: "LOOP_DETECTED",
+	510: "NOT_EXTENDED",
+	511: "NETWORK_AUTHENTICATION_REQUIRED",
+}
 
 
 # Public methods
 
-func code_to_status(code: int) -> StatusCode:
-	return __statuses_by_code[code]
+static func code_to_description(code: int) -> String:
+	return __DESCRIPTIONS[code]
+
+
+static func code_to_identifier(code: int) -> String:
+	return __IDENTIFIERS[code]
+
+
+static func code_to_response(code: int) -> String:
+	return "%s\n\n" % code_to_status_line(code)
+
+
+static func code_to_status_line(code: int) -> String:
+	return "HTTP/1.1 %d %s" % [code, code_to_identifier(code)]
