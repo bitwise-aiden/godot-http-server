@@ -40,13 +40,13 @@ func fallback(function: FuncRef) -> void:
 
 
 func take_connection() -> StreamPeerTCP:
-	if self.__server == null || !self.__server.is_listening():
+	if !is_listening():
 		print(
 			"[ERR] Server is not listening, please initialize and listen before calling `take_connection`"
 		)
-		return
+		return null
 
-	var connection: StreamPeerTCP = self.__server.take_connection()
+	var connection: StreamPeerTCP = .take_connection()
 
 	if connection:
 		self.__process_connection(connection)
