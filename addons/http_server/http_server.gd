@@ -3,6 +3,7 @@ class_name HTTPServer extends TCP_Server
 
 # Public constants
 
+const Method = preload("res://addons/http_server/method.gd")
 const Request = preload("res://addons/http_server/request.gd")
 const Response = preload("res://addons/http_server/response.gd")
 const Status = preload("res://addons/http_server/status.gd")
@@ -25,7 +26,7 @@ func endpoint(type: int, endpoint: String, function: FuncRef) -> void:
 	if endpoint_hash in __endpoints:
 		print(
 			"[ERR] Endpoint already defined type: %s, endpoint: %s" % [
-				__type_string(type),
+				Method.type_to_identifier(type),
 				endpoint,
 			]
 		)
@@ -54,17 +55,6 @@ func take_connection() -> StreamPeerTCP:
 
 
 # Private methods
-
-func __type_string(type: int) -> String:
-	if type < 0 || type > 3:
-		return "UNKNOWN (%d)" % type
-
-	return ["GET", "DELETE", "PUT", "POST"][type]
-
-
-func __type_from_string(type: String) -> int:
-	return ["GET", "DELETE", "PUT", "POST"].find(type)
-
 
 func __process_connection(connection: StreamPeerTCP) -> void:
 	var content: PoolByteArray = PoolByteArray([])
@@ -119,8 +109,8 @@ func __process_connection(connection: StreamPeerTCP) -> void:
 	connection.put_data(result.to_utf8())
 
 
-func __process_request(method: String, endpoint: String, headers: Dictionary, body: String) -> String:
-	var type: int = __type_from_string(method)
+func __process_request(method: String, endpoint: String, headers: Dictionary, body: String) -> Response:
+	var type: int = Method.description_to_type(method)
 
 	var request: Request = Request.new(
 		type,
