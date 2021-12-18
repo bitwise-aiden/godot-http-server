@@ -21,9 +21,9 @@ func __start_server(port: int = 3000) -> void:
 	print("Starting server")
 	__server = HTTPServer.new()
 
-	__server.endpoint(HTTPServer.Request.GET, "/test", funcref(self, "__test"))
-	__server.endpoint(HTTPServer.Request.POST, "/test", funcref(self, "__test_post"))
-	__server.endpoint(HTTPServer.Request.POST, "/webhook", funcref(self, "__webhook"))
+	__server.endpoint(HTTPServer.Method.GET, "/test", funcref(self, "__test"))
+	__server.endpoint(HTTPServer.Method.POST, "/test", funcref(self, "__test_post"))
+	__server.endpoint(HTTPServer.Method.POST, "/webhook", funcref(self, "__webhook"))
 #	__server.fallback(funcref(self, "__fallback"))
 
 	__server.listen(port)
