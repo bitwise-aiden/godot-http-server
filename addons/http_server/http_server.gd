@@ -74,7 +74,7 @@ func __process_connection(connection: StreamPeerTCP) -> void:
 	var content_parts: Array = content_string.split("\r\n")
 
 	if content_parts.empty():
-		connection.put_data(Status.code_to_response(Status.BAD_REQUEST).to_utf8())
+		connection.put_data(__response_from_status(Status.BAD_REQUEST).to_utf8())
 		return
 
 	var request_line = content_parts[0]
@@ -90,7 +90,7 @@ func __process_connection(connection: StreamPeerTCP) -> void:
 		print(
 			"[ERR] Error parsing request data: %s" % [String(content)]
 		)
-		connection.put_data(Status.code_to_response(Status.BAD_REQUEST).to_utf8())
+		connection.put_data(__response_from_status(Status.BAD_REQUEST).to_utf8())
 		return
 
 	for i in range(1, header_index):
@@ -105,8 +105,8 @@ func __process_connection(connection: StreamPeerTCP) -> void:
 		var body_parts: Array = content_parts.slice(header_index + 1, content_parts.size())
 		body = PoolStringArray(body_parts).join("\r\n")
 
-	var result: String = __process_request(method, endpoint, headers, body)
-	connection.put_data(result.to_utf8())
+	var response: Response = __process_request(method, endpoint, headers, body)
+	connection.put_data(response.to_utf8())
 
 
 func __process_request(method: String, endpoint: String, headers: Dictionary, body: String) -> Response:
@@ -128,29 +128,27 @@ func __process_request(method: String, endpoint: String, headers: Dictionary, bo
 		if __fallback:
 			endpoint_func = __fallback
 		else:
-			return Status.code_to_response(Status.NOT_FOUND)
+			return __response_from_status(Status.NOT_FOUND)
 	else:
 		endpoint_func = __endpoints[endpoint_hash]
+
+	var response: Response = Response.new()
 
 	if !endpoint_func.is_valid():
 		print(
 			"[ERR] FuncRef for endpoint not valid, method: %s, endpoint: %s" % [method, endpoint]
 		)
+	else:
+		print(
+			"[INF] Recieved request method: %s, endpoint: %s" % [method, endpoint]
+		)
+		endpoint_func.call_func(request, response)
 
-	print(
-		"[INF] Recieved request method: %s, endpoint: %s" % [method, endpoint]
-	)
+	return response
 
+
+func __response_from_status(code: int) -> Response:
 	var response: Response = Response.new()
-	endpoint_func.call_func(request, response)
+	response.status(code)
 
-	return __process_response(response)
-
-
-
-	content.append("")
-
-	if data:
-		content.append(data)
-
-	return content.join("\r\n")
+	return response
