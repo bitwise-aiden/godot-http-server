@@ -1,3 +1,8 @@
+# Public Constants
+
+const Status = preload("res://addons/http_server/status.gd")
+
+
 # Private variables
 
 var __data = "" # variant
@@ -25,3 +30,28 @@ func json(data) -> void: # data: Variant
 
 func status(status: int) -> void:
 	__status = status
+
+
+func to_utf8() -> PoolByteArray:
+	var content = PoolStringArray()
+
+	content.append(Status.code_to_status_line(__status))
+
+	var data = __data
+	if !data:
+		data = Status.code_to_description(__status)
+
+	if __headers.get("content-type", "") == "application/json":
+		data = JSON.print(data)
+
+	__headers['content-length'] = len(data)
+
+	for header in __headers:
+		content.append("%s: %s" % [header, String(__headers[header])])
+
+	content.append("")
+
+	if data:
+		content.append(data)
+
+	return content.join("\r\n").to_utf8()

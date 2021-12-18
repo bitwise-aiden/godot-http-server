@@ -147,22 +147,6 @@ func __process_request(method: String, endpoint: String, headers: Dictionary, bo
 	return __process_response(response)
 
 
-func __process_response(response: Response) -> String:
-	var content = PoolStringArray()
-
-	content.append(Status.code_to_status_line(response.__status))
-
-	var data = response.__data
-	if !data:
-		data = Status.code_to_description(response.__status)
-
-	if response.__headers.get("content-type", "") == "application/json":
-		data = JSON.print(data)
-
-	response.__headers['content-length'] = len(data)
-
-	for header in response.__headers:
-		content.append("%s: %s" % [header, String(response.__headers[header])])
 
 	content.append("")
 
