@@ -1,10 +1,7 @@
-# Constant variables
 
-const GET = 0
-const DELETE = 1
-const PUT = 2
-const POST = 3
+# Public constants
 
+const Method = preload("res://addons/http_server/method.gd")
 
 # Private variables
 
@@ -15,7 +12,7 @@ var __headers: Dictionary = {
 	# value: Variant, header value
 }
 var __json_data = null # Variant
-var __type: int = GET
+var __type: int = Method.GET
 
 
 # Lifecyle methods
