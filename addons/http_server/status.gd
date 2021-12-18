@@ -1,196 +1,134 @@
 # Public constants
 
-const CONTINUE: int = 100
-const SWITCHING_PROTOCOLS: int = 101
-const PROCESSING: int = 102
-const EARLY_HINTS: int = 103
-const OK: int = 200
-const CREATED: int = 201
-const ACCEPTED: int = 202
-const NON_AUTHORITATIVE_INFORMATION: int = 203
-const NO_CONTENT: int = 204
-const RESET_CONTENT: int = 205
-const PARTIAL_CONTENT: int = 206
-const MULTI_STATUS: int = 207
-const ALREADY_REPORTED: int = 208
-const IM_USED: int = 226
-const MULTIPLE_CHOICE: int = 300
-const MOVED_PERMANENTLY: int = 301
-const FOUND: int = 302
-const SEE_OTHER: int = 303
-const NOT_MODIFIED: int = 304
-const TEMPORARY_REDIRECT: int = 307
-const PERMANENT_REDIRECT: int = 308
-const BAD_REQUEST: int = 400
-const UNAUTHORIZED: int = 401
-const PAYMENT_REQUIRED: int = 402
-const FORBIDDEN: int = 403
-const NOT_FOUND: int = 404
-const METHOD_NOT_ALLOWED: int = 405
-const NOT_ACCEPTABLE: int = 406
-const PROXY_AUTHENTICATION_REQUIRED: int = 407
-const REQUEST_TIMEOUT: int = 408
-const CONFLICT: int = 409
-const GONE: int = 410
-const LENGTH_REQUIRED: int = 411
-const PRECONDITION_FAILED: int = 412
-const PAYLOAD_TOO_LARGE: int = 413
-const URI_TOO_LONG: int = 414
-const UNSUPPORTED_MEDIA_TYPE: int = 415
-const RANGE_NOT_SATISFIABLE: int = 416
-const EXPECTATION_FAILED: int = 417
-const IM_A_TEAPOT: int = 418
-const MISDIRECTED_REQUEST: int = 421
-const UNPROCESSABLE_ENTITY: int = 422
-const LOCKED: int = 423
-const FAILED_DEPENDENCY: int = 424
-const TOO_EARLY: int = 425
-const UPGRADE_REQUIRED: int = 426
-const PRECONDITION_REQUIRED: int = 428
-const TOO_MANY_REQUESTS: int = 429
-const REQUEST_HEADER_FIELDS_TOO_LARGE: int = 431
-const UNAVAILABLE_FOR_LEGAL_REASONS: int = 451
-const INTERNAL_SERVER_ERROR: int = 500
-const NOT_IMPLEMENTED: int = 501
-const BAD_GATEWAY: int = 502
-const SERVICE_UNAVAILABLE: int = 503
-const GATEWAY_TIMEOUT: int = 504
-const HTTP_VERSION_NOT_SUPPORTED: int = 505
-const VARIANT_ALSO_NEGOTIATES: int = 506
-const INSUFFICIENT_STORAGE: int = 507
-const LOOP_DETECTED: int = 508
-const NOT_EXTENDED: int = 510
-const NETWORK_AUTHENTICATION_REQUIRED: int = 511
+enum {
+	CONTINUE = 100
+	SWITCHING_PROTOCOLS = 101
+	PROCESSING = 102
+	EARLY_HINTS = 103
+	OK = 200
+	CREATED = 201
+	ACCEPTED = 202
+	NON_AUTHORITATIVE_INFORMATION = 203
+	NO_CONTENT = 204
+	RESET_CONTENT = 205
+	PARTIAL_CONTENT = 206
+	MULTI_STATUS = 207
+	ALREADY_REPORTED = 208
+	IM_USED = 226
+	MULTIPLE_CHOICE = 300
+	MOVED_PERMANENTLY = 301
+	FOUND = 302
+	SEE_OTHER = 303
+	NOT_MODIFIED = 304
+	TEMPORARY_REDIRECT = 307
+	PERMANENT_REDIRECT = 308
+	BAD_REQUEST = 400
+	UNAUTHORIZED = 401
+	PAYMENT_REQUIRED = 402
+	FORBIDDEN = 403
+	NOT_FOUND = 404
+	METHOD_NOT_ALLOWED = 405
+	NOT_ACCEPTABLE = 406
+	PROXY_AUTHENTICATION_REQUIRED = 407
+	REQUEST_TIMEOUT = 408
+	CONFLICT = 409
+	GONE = 410
+	LENGTH_REQUIRED = 411
+	PRECONDITION_FAILED = 412
+	PAYLOAD_TOO_LARGE = 413
+	URI_TOO_LONG = 414
+	UNSUPPORTED_MEDIA_TYPE = 415
+	RANGE_NOT_SATISFIABLE = 416
+	EXPECTATION_FAILED = 417
+	IM_A_TEAPOT = 418
+	MISDIRECTED_REQUEST = 421
+	UNPROCESSABLE_ENTITY = 422
+	LOCKED = 423
+	FAILED_DEPENDENCY = 424
+	TOO_EARLY = 425
+	UPGRADE_REQUIRED = 426
+	PRECONDITION_REQUIRED = 428
+	TOO_MANY_REQUESTS = 429
+	REQUEST_HEADER_FIELDS_TOO_LARGE = 431
+	UNAVAILABLE_FOR_LEGAL_REASONS = 451
+	INTERNAL_SERVER_ERROR = 500
+	NOT_IMPLEMENTED = 501
+	BAD_GATEWAY = 502
+	SERVICE_UNAVAILABLE = 503
+	GATEWAY_TIMEOUT = 504
+	HTTP_VERSION_NOT_SUPPORTED = 505
+	VARIANT_ALSO_NEGOTIATES = 506
+	INSUFFICIENT_STORAGE = 507
+	LOOP_DETECTED = 508
+	NOT_EXTENDED = 510
+	NETWORK_AUTHENTICATION_REQUIRED = 511
+}
 
 
 # Private constants
 
 const __DESCRIPTIONS: Dictionary = {
-	100: "Continue",
-	101: "Switching Protocols",
-	102: "Processing",
-	103: "Early Hints",
-	200: "Ok",
-	201: "Created",
-	202: "Accepted",
-	203: "Non-Authoritative Information",
-	204: "No Content",
-	205: "Reset Content",
-	206: "Partial Content",
-	207: "Multi-Status",
-	208: "Already Reported",
-	226: "IM Used",
-	300: "Multiple Choice",
-	301: "Moved Permanently",
-	302: "Found",
-	303: "See Other",
-	304: "Not Modified",
-	307: "Temporary Redirect",
-	308: "Permanent Redirect",
-	400: "Bad Request",
-	401: "Unauthorized",
-	402: "Payment Required",
-	403: "Forbidden",
-	404: "Not Found",
-	405: "Method Not Allowed",
-	406: "Not Acceptable",
-	407: "Proxy Authentication Requested",
-	408: "Request Timeout",
-	409: "Conflict",
-	410: "Gone",
-	411: "Length Required",
-	412: "Precondition Failed",
-	413: "Payload Too Large",
-	414: "URI Too long",
-	415: "Unsupported Media Type",
-	416: "Range Not Satisfiable",
-	417: "Expectation Failed",
-	418: "I'm A Teapot",
-	421: "Misdirected Request",
-	422: "Unprocessable Entity",
-	423: "Locked",
-	424: "Failed Dependency",
-	425: "Too Early",
-	426: "Upgrade Required",
-	428: "Precondition Required",
-	429: "Too Many Requests",
-	431: "Request Header Fields Too Large",
-	451: "Unavailable For Legal Reasons",
-	500: "Internal Server Error",
-	501: "Not Implemented",
-	502: "Bad Gateway",
-	503: "Service Unavailable",
-	504: "Gateway Timeout",
-	505: "HTTP Version Not Supported",
-	506: "Variant Also Negotiates",
-	507: "Insufficient Storage",
-	508: "Loop detected",
-	510: "Not Extended",
-	511: "Network Authentication Required",
-}
-
-const __IDENTIFIERS: Dictionary = {
-	100: "CONTINUE",
-	101: "SWITCHING_PROTOCOLS",
-	102: "PROCESSING",
-	103: "EARLY_HINTS",
-	200: "OK",
-	201: "CREATED",
-	202: "ACCEPTED",
-	203: "NON_AUTHORITATIVE_INFORMATION",
-	204: "NO_CONTENT",
-	205: "RESET_CONTENT",
-	206: "PARTIAL_CONTENT",
-	207: "MULTI_STATUS",
-	208: "ALREADY_REPORTED",
-	226: "IM_USED",
-	300: "MULTIPLE_CHOICE",
-	301: "MOVED_PERMANENTLY",
-	302: "FOUND",
-	303: "SEE_OTHER",
-	304: "NOT_MODIFIED",
-	307: "TEMPORARY_REDIRECT",
-	308: "PERMANENT_REDIRECT",
-	400: "BAD_REQUEST",
-	401: "UNAUTHORIZED",
-	402: "PAYMENT_REQUIRED",
-	403: "FORBIDDEN",
-	404: "NOT_FOUND",
-	405: "METHOD_NOT_ALLOWED",
-	406: "NOT_ACCEPTABLE",
-	407: "PROXY_AUTHENTICATION_REQUIRED",
-	408: "REQUEST_TIMEOUT",
-	409: "CONFLICT",
-	410: "GONE",
-	411: "LENGTH_REQUIRED",
-	412: "PRECONDITION_FAILED",
-	413: "PAYLOAD_TOO_LARGE",
-	414: "URI_TOO_LONG",
-	415: "UNSUPPORTED_MEDIA_TYPE",
-	416: "RANGE_NOT_SATISFIABLE",
-	417: "EXPECTATION_FAILED",
-	418: "IM_A_TEAPOT",
-	421: "MISDIRECTED_REQUEST",
-	422: "UNPROCESSABLE_ENTITY",
-	423: "LOCKED",
-	424: "FAILED_DEPENDENCY",
-	425: "TOO_EARLY",
-	426: "UPGRADE_REQUIRED",
-	428: "PRECONDITION_REQUIRED",
-	429: "TOO_MANY_REQUESTS",
-	431: "REQUEST_HEADER_FIELDS_TOO_LARGE",
-	451: "UNAVAILABLE_FOR_LEGAL_REASONS",
-	500: "INTERNAL_SERVER_ERROR",
-	501: "NOT_IMPLEMENTED",
-	502: "BAD_GATEWAY",
-	503: "SERVICE_UNAVAILABLE",
-	504: "GATEWAY_TIMEOUT",
-	505: "HTTP_VERSION_NOT_SUPPORTED",
-	506: "VARIANT_ALSO_NEGOTIATES",
-	507: "INSUFFICIENT_STORAGE",
-	508: "LOOP_DETECTED",
-	510: "NOT_EXTENDED",
-	511: "NETWORK_AUTHENTICATION_REQUIRED",
+	CONTINUE: "Continue",
+	SWITCHING_PROTOCOLS: "Switching Protocols",
+	PROCESSING: "Processing",
+	EARLY_HINTS: "Early Hints",
+	OK: "Ok",
+	CREATED: "Created",
+	ACCEPTED: "Accepted",
+	NON_AUTHORITATIVE_INFORMATION: "Non-Authoritative Information",
+	NO_CONTENT: "No Content",
+	RESET_CONTENT: "Reset Content",
+	PARTIAL_CONTENT: "Partial Content",
+	MULTI_STATUS: "Multi-Status",
+	ALREADY_REPORTED: "Already Reported",
+	IM_USED: "IM Used",
+	MULTIPLE_CHOICE: "Multiple Choice",
+	MOVED_PERMANENTLY: "Moved Permanently",
+	FOUND: "Found",
+	SEE_OTHER: "See Other",
+	NOT_MODIFIED: "Not Modified",
+	TEMPORARY_REDIRECT: "Temporary Redirect",
+	PERMANENT_REDIRECT: "Permanent Redirect",
+	BAD_REQUEST: "Bad Request",
+	UNAUTHORIZED: "Unauthorized",
+	PAYMENT_REQUIRED: "Payment Required",
+	FORBIDDEN: "Forbidden",
+	NOT_FOUND: "Not Found",
+	METHOD_NOT_ALLOWED: "Method Not Allowed",
+	NOT_ACCEPTABLE: "Not Acceptable",
+	PROXY_AUTHENTICATION_REQUIRED: "Proxy Authentication Requested",
+	REQUEST_TIMEOUT: "Request Timeout",
+	CONFLICT: "Conflict",
+	GONE: "Gone",
+	LENGTH_REQUIRED: "Length Required",
+	PRECONDITION_FAILED: "Precondition Failed",
+	PAYLOAD_TOO_LARGE: "Payload Too Large",
+	URI_TOO_LONG: "URI Too long",
+	UNSUPPORTED_MEDIA_TYPE: "Unsupported Media Type",
+	RANGE_NOT_SATISFIABLE: "Range Not Satisfiable",
+	EXPECTATION_FAILED: "Expectation Failed",
+	IM_A_TEAPOT: "I'm A Teapot",
+	MISDIRECTED_REQUEST: "Misdirected Request",
+	UNPROCESSABLE_ENTITY: "Unprocessable Entity",
+	LOCKED: "Locked",
+	FAILED_DEPENDENCY: "Failed Dependency",
+	TOO_EARLY: "Too Early",
+	UPGRADE_REQUIRED: "Upgrade Required",
+	PRECONDITION_REQUIRED: "Precondition Required",
+	TOO_MANY_REQUESTS: "Too Many Requests",
+	REQUEST_HEADER_FIELDS_TOO_LARGE: "Request Header Fields Too Large",
+	UNAVAILABLE_FOR_LEGAL_REASONS: "Unavailable For Legal Reasons",
+	INTERNAL_SERVER_ERROR: "Internal Server Error",
+	NOT_IMPLEMENTED: "Not Implemented",
+	BAD_GATEWAY: "Bad Gateway",
+	SERVICE_UNAVAILABLE: "Service Unavailable",
+	GATEWAY_TIMEOUT: "Gateway Timeout",
+	HTTP_VERSION_NOT_SUPPORTED: "HTTP Version Not Supported",
+	VARIANT_ALSO_NEGOTIATES: "Variant Also Negotiates",
+	INSUFFICIENT_STORAGE: "Insufficient Storage",
+	LOOP_DETECTED: "Loop detected",
+	NOT_EXTENDED: "Not Extended",
+	NETWORK_AUTHENTICATION_REQUIRED: "Network Authentication Required",
 }
 
 
@@ -201,12 +139,9 @@ static func code_to_description(code: int) -> String:
 
 
 static func code_to_identifier(code: int) -> String:
-	return __IDENTIFIERS[code]
-
-
-static func code_to_response(code: int) -> String:
-	return "%s\n\n" % code_to_status_line(code)
+	return code_to_description(code).to_upper().replace(" ", "_").replace("'", "")
 
 
 static func code_to_status_line(code: int) -> String:
 	return "HTTP/1.1 %d %s" % [code, code_to_identifier(code)]
+
