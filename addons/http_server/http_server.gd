@@ -120,8 +120,16 @@ func __process_request(method: String, endpoint: String, headers: Dictionary, bo
 	)
 
 	var endpoint_func: FuncRef = null
-	var endpoint_hash: Array = [type, endpoint]
-	if !__endpoints.has(endpoint_hash):
+	var endpoint_parts: PoolStringArray = endpoint.split("/", false)
+
+	while !endpoint_func && !endpoint_parts.empty():
+		var endpoint_hash: Array = [type, "/" + endpoint_parts.join("/")]
+		if __endpoints.has(endpoint_hash):
+			endpoint_func = __endpoints[endpoint_hash]
+		else:
+			endpoint_parts.remove(endpoint_parts.size() - 1)
+
+	if !endpoint_func:
 		print(
 			"[WRN] Recieved request for unknown endpoint, method: %s, endpoint: %s" % [method, endpoint]
 		)
@@ -129,8 +137,6 @@ func __process_request(method: String, endpoint: String, headers: Dictionary, bo
 			endpoint_func = __fallback
 		else:
 			return __response_from_status(Status.NOT_FOUND)
-	else:
-		endpoint_func = __endpoints[endpoint_hash]
 
 	var response: Response = Response.new()
 
