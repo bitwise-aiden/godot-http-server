@@ -122,12 +122,15 @@ func __process_request(method: String, endpoint: String, headers: Dictionary, bo
 	var endpoint_func: FuncRef = null
 	var endpoint_parts: PoolStringArray = endpoint.split("/", false)
 
-	while !endpoint_func && !endpoint_parts.empty():
+	while !endpoint_func:
 		var endpoint_hash: Array = [type, "/" + endpoint_parts.join("/")]
 		if __endpoints.has(endpoint_hash):
 			endpoint_func = __endpoints[endpoint_hash]
+		elif endpoint_parts.empty():
+			break
 		else:
 			endpoint_parts.remove(endpoint_parts.size() - 1)
+
 
 	if !endpoint_func:
 		print(
