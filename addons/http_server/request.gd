@@ -17,7 +17,7 @@ var __type: int = Method.GET
 
 # Lifecyle methods
 
-func _init(type: int, endpoint: String, headers: Dictionary, body: String) -> void:
+func _init(type: int,endpoint: String,headers: Dictionary,body: String):
 	__body = body
 	__endpoint = endpoint
 	__headers = headers
@@ -49,17 +49,18 @@ func json(): # Variant
 	var content_type = header("content-type")
 	if  content_type != "application/json":
 		print(
-			"[WRN] Attempting to call get_json on a request with content-type: %s" % [content_type]
+			"[WRN] Attempting to call get_json checked a request with content-type: %s" % [content_type]
 		)
 		return null
 
-	var result = JSON.parse(__body)
-	if result.error:
+	var json = JSON.new()
+	var test_json_conv = json.parse(__body)
+	if test_json_conv != OK:
 		print(
-			"[ERR] Error parsing request json: %s" % [result.error_string]
+			"[ERR] Error parsing request json at line %s: %s" % [json.get_error_line(), json.get_error_message()]
 		)
 
-	__json_data = result.result
+	__json_data = json.get_data()
 
 	return __json_data
 

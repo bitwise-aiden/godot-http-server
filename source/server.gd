@@ -1,6 +1,6 @@
 extends Node
 
-
+var img = preload("res://html/picture.png")
 # Private variables
 
 var __server: HTTPServer = null
@@ -21,10 +21,9 @@ func __start_server(port: int = 3000) -> void:
 	print("Starting server")
 	__server = HTTPServer.new()
 
-	__server.endpoint(HTTPServer.Method.GET, "/test", funcref(self, "__test"))
-	__server.endpoint(HTTPServer.Method.POST, "/test", funcref(self, "__test_post"))
-	__server.endpoint(HTTPServer.Method.POST, "/webhook", funcref(self, "__webhook"))
-#	__server.fallback(funcref(self, "__fallback"))
+	__server.endpoint(HTTPServer.Method.GET, "/test", __test)
+	__server.endpoint(HTTPServer.Method.POST, "/test", __test_post)
+	__server.endpoint(HTTPServer.Method.POST, "/webhook", __webhook)
 
 	__server.listen(port)
 
@@ -33,7 +32,7 @@ func __process_connections() -> void:
 	if __server == null:
 		return # Possibly start the server again here
 
-	__server.take_connection()
+	__server.__take_connection()
 
 
 func __test(request: HTTPServer.Request, response: HTTPServer.Response) -> void:

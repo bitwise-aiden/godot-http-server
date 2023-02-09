@@ -32,26 +32,26 @@ func status(status: int) -> void:
 	__status = status
 
 
-func to_utf8() -> PoolByteArray:
-	var content = PoolStringArray()
+func to_utf8_buffer() -> PackedByteArray:
+	var content = PackedStringArray()
 
 	content.append(Status.code_to_status_line(__status))
 
 	var data = __data
-	if !data:
+	if data.is_empty():
 		data = Status.code_to_description(__status)
 
 	if __headers.get("content-type", "") == "application/json":
-		data = JSON.print(data)
+		data = JSON.stringify(data)
 
 	__headers['content-length'] = len(data)
 
 	for header in __headers:
-		content.append("%s: %s" % [header, String(__headers[header])])
+		content.append("%s: %s" % [header, str(__headers[header])])
 
 	content.append("")
 
 	if data:
 		content.append(data)
 
-	return content.join("\r\n").to_utf8()
+	return "\r\n".join(content).to_utf8_buffer()
